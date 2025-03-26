@@ -1,0 +1,82 @@
+.draggable-window {
+  position: absolute;
+  width: 100%;
+  max-width: 100%;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  z-index: 1000;
+
+  
+  
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.window-header {
+  background: rgb(43, 43, 43);
+  color: #fff;
+  padding: 8px 12px;
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.window-title { 
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.window-controls button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.window-controls button:hover { 
+  opacity: 0.7;
+}
+
+.window-content { 
+  flex: 1; 
+  overflow: auto; 
+  padding: 1px;
+  font-size: 14px;
+  background: #ffffff;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 500px) {
+  .draggable-window {
+    position: absolute;
+    width: 95%;
+    max-width: 90%;
+    margin-top: -22%;
+    margin-left: -17%;
+  }
+  .max{
+    display: none;
+  }
+  
+  .window-header {
+    padding: 6px 10px;
+  }
+
+  .window-title {
+    font-size: 14px;
+  }
+
+  .window-controls button {
+    font-size: 12px;
+  }
+
+  .window-content {
+    padding: 10px;
+    font-size: 12px;
+  }
+}

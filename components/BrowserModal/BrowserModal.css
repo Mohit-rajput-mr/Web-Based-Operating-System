@@ -1,0 +1,33 @@
+.browser-modal {
+  position: fixed;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  height: 80%;
+  background-color: #fff;
+  color: #000;
+  z-index: 1003;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+.browser-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+.close-browser {
+  background-color: red;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+.close-browser:hover { background-color: darkred; }
+.browser-iframe { flex: 1; border: none; }

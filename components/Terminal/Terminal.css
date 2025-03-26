@@ -1,0 +1,92 @@
+.terminal-modal {
+  position: fixed;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  height: 80%;
+  background-color: #000;
+  color: #0f0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  font-family: Consolas, monospace;
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #111;
+  padding: 5px 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+}
+
+.terminal-title {
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.window-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.min-btn, .max-btn, .close-terminal {
+  background: #333;
+  border: none;
+  color: #fff;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.min-btn:hover, .max-btn:hover, .close-terminal:hover {
+  background-color: #555;
+}
+
+.close-terminal {
+  background-color: red;
+}
+
+.close-terminal:hover {
+  background-color: darkred;
+}
+
+.terminal-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  overflow: hidden;
+  border-radius: 0 0 8px 8px;
+}
+
+.terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 5px;
+}
+
+.terminal-line {
+  white-space: pre-wrap;
+  margin: 2px 0;
+}
+
+.terminal-input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: #222;
+  color: #0f0;
+  outline: none;
+  font-family: Consolas, monospace;
+  font-size: 14px;
+  border-radius: 4px;
+}

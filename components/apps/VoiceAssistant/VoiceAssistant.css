@@ -1,0 +1,27 @@
+.voice-assistant-container {
+    padding: 15px;
+    background: #e0ffe0;
+    border-radius: 8px;
+    color: #333;
+  }
+  .voice-controls {
+    margin-bottom: 10px;
+  }
+  .voice-controls button {
+    padding: 8px 15px;
+    background-color: #008000;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .voice-controls button:hover {
+    background-color: #006600;
+  }
+  .transcript {
+    background: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 100px;
+  }
+  

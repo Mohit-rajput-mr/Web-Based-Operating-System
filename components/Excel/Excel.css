@@ -1,0 +1,79 @@
+.excel-modal {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    width: 800px;
+    height: 600px;
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    z-index: 3000;
+  }
+  
+  .excel-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 6px 12px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .excel-title {
+    font-weight: bold;
+  }
+  
+  .excel-menu button {
+    margin-left: 5px;
+    background-color: #0078d7;
+    border: none;
+    color: #fff;
+    padding: 5px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .excel-menu button:hover {
+    background-color: #005fa3;
+  }
+  
+  .excel-ribbon {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    padding: 4px 8px;
+  }
+  .excel-ribbon ul {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+  }
+  .excel-ribbon li {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .excel-grid {
+    flex: 1;
+    overflow: auto;
+    background-color: #fff;
+    padding: 8px;
+  }
+  
+  .excel-row {
+    display: flex;
+  }
+  
+  .excel-cell {
+    width: 100px;
+    height: 25px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    padding: 2px 4px;
+    outline: none;
+  }
+  
