@@ -1,0 +1,100 @@
+.network-panel {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 8px;
+    z-index: 9999;
+    padding: 10px;
+  }
+  
+  .network-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .network-header h3 {
+    margin: 0;
+  }
+  
+  .network-header button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .network-controls {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .network-controls button {
+    background-color: #444;
+    border: none;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .network-controls button:hover {
+    background-color: #666;
+  }
+  
+  .network-list {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    border: 1px solid #444;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
+  .network-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .network-item button {
+    background-color: #555;
+    border: none;
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .network-item button:hover {
+    background-color: #777;
+  }
+  
+  .advanced-operations {
+    margin-top: 10px;
+  }
+  
+  .advanced-operations h4 {
+    margin-bottom: 5px;
+  }
+  
+  .advanced-operations ul {
+    list-style: inside disc;
+    padding-left: 20px;
+    max-height: 100px;
+    overflow-y: auto;
+  }
+  
+  .advanced-operations li {
+    margin-bottom: 3px;
+  }
+  

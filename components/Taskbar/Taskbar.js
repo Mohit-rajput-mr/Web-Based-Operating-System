@@ -20,11 +20,15 @@ import {
   FaMapMarkerAlt,
   FaBars,
   FaTimes,
-  FaPowerOff,
-  FaWifi,
-  FaVolumeUp,
-  FaBatteryThreeQuarters
+  FaPowerOff
 } from "react-icons/fa";
+
+/**
+ * New imports for Wi-Fi, Volume, Battery
+ */
+import Network from "../apps/Network/Network";
+import VolumeControl from "../apps/Volume/VolumeControl";
+import Battery from "../apps/Battery/Battery";
 
 const Taskbar = ({
   onOpenApp,
@@ -38,6 +42,13 @@ const Taskbar = ({
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
   const [showPowerMenu, setShowPowerMenu] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+
+  /**
+   * States for toggling the new Wi-Fi, Volume, Battery panels
+   */
+  const [showNetworkPanel, setShowNetworkPanel] = useState(false);
+  const [showVolumePanel, setShowVolumePanel] = useState(false);
+  const [showBatteryPanel, setShowBatteryPanel] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 600);
@@ -54,7 +65,8 @@ const Taskbar = ({
     return () => clearInterval(timer);
   }, []);
 
-  const formatTime = (date) => date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const formatTime = (date) =>
+    date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   const formatDate = (date) => date.toLocaleDateString();
 
   const apiIcons = [
@@ -99,10 +111,13 @@ const Taskbar = ({
       {minimizedWindows.length > 0 && (
         <div className="minimized-mobile">
           <h4>Minimized:</h4>
-          {minimizedWindows.map(win => (
+          {minimizedWindows.map((win) => (
             <button
               key={win.id}
-              onClick={() => onRestoreWindow(win.id)}
+              onClick={() => {
+                onRestoreWindow(win.id);
+                setShowHamburgerMenu(false);
+              }}
               className="minimized-btn"
             >
               {win.title}
@@ -130,71 +145,121 @@ const Taskbar = ({
   );
 
   return (
-    <div className="taskbar">
-      <div className="taskbar-left">
-        <button className="start-btn" onClick={() => onOpenApp("windowsMenu")}>
-          <FaWindows size={24} />
-        </button>
-      </div>
-
-      <div className="taskbar-center">
-        {pinnedItems.map((pin, idx) => (
-          <div
-            key={idx}
-            className="taskbar-icon pinned-icon"
-            title={pin.name}
-            onClick={() => onOpenApp(pin.app || pin.id)}
-          >
-            {pin.icon || <FaFolderOpen size={18} />}
-          </div>
-        ))}
-
-        {!isMobile && renderIcons()}
-
-        {isMobile && (
-          <button className="hamburger-btn" onClick={() => setShowHamburgerMenu(true)}>
-            <FaBars size={24} />
+    <>
+      <div className="taskbar">
+        <div className="taskbar-left">
+          <button className="start-btn" onClick={() => onOpenApp("windowsMenu")}>
+            <FaWindows size={24} />
           </button>
-        )}
-
-        {!isMobile && minimizedWindows.map(win => (
-          <div
-            key={win.id}
-            className="taskbar-icon minimized-icon"
-            onClick={() => onRestoreWindow(win.id)}
-            title={`Restore ${win.title}`}
-          >
-            {win.title}
-          </div>
-        ))}
-      </div>
-
-      <div className="taskbar-right">
-        <div className="system-tray">
-          <FaWifi size={16} style={{ marginRight: '8px' }} />
-          <FaVolumeUp size={16} style={{ marginRight: '8px' }} />
-          <FaBatteryThreeQuarters size={16} style={{ marginRight: '8px' }} />
-          <div className="time-date">
-            <div>{formatTime(currentTime)}</div>
-            <div style={{ fontSize: '12px' }}>{formatDate(currentTime)}</div>
-          </div>
         </div>
-        {!isMobile && (
-          <>
-            <button className="power-btn" onClick={onShutdown}>Shutdown</button>
-            <button className="power-btn" onClick={onSleep}>Sleep</button>
-          </>
-        )}
-        {isMobile && (
-          <button className="power-icon-btn" onClick={() => setShowPowerMenu(true)}>
-            <FaPowerOff size={24} />
-          </button>
-        )}
+
+        <div className="taskbar-center">
+          {pinnedItems.map((pin, idx) => (
+            <div
+              key={idx}
+              className="taskbar-icon pinned-icon"
+              title={pin.name}
+              onClick={() => onOpenApp(pin.app || pin.id)}
+            >
+              {pin.icon || <FaFolderOpen size={18} />}
+            </div>
+          ))}
+
+          {!isMobile && renderIcons()}
+
+          {isMobile && (
+            <button className="hamburger-btn" onClick={() => setShowHamburgerMenu(true)}>
+              <FaBars size={24} />
+            </button>
+          )}
+
+          {!isMobile &&
+            minimizedWindows.map((win) => (
+              <div
+                key={win.id}
+                className="taskbar-icon minimized-icon"
+                onClick={() => onRestoreWindow(win.id)}
+                title={`Restore ${win.title}`}
+              >
+                {win.title}
+              </div>
+            ))}
+        </div>
+
+        <div className="taskbar-right">
+          {/* Wi-Fi, Volume, Battery Icons */}
+          <div
+            className="taskbar-icon"
+            title="Network (Wi-Fi)"
+            onClick={() => {
+              setShowNetworkPanel((prev) => !prev);
+              setShowVolumePanel(false);
+              setShowBatteryPanel(false);
+            }}
+          >
+            {/* Could replace with a dynamic Wi-Fi icon if you detect signal strength */}
+            <img src="/wifi.png" alt="Wi-Fi" style={{ width: 16, height: 16 }} />
+          </div>
+          <div
+            className="taskbar-icon"
+            title="Volume"
+            onClick={() => {
+              setShowVolumePanel((prev) => !prev);
+              setShowNetworkPanel(false);
+              setShowBatteryPanel(false);
+            }}
+          >
+            <img src="/volume.png" alt="Volume" style={{ width: 16, height: 16 }} />
+          </div>
+          <div
+            className="taskbar-icon"
+            title="Battery"
+            onClick={() => {
+              setShowBatteryPanel((prev) => !prev);
+              setShowNetworkPanel(false);
+              setShowVolumePanel(false);
+            }}
+          >
+            <img src="/battery.png" alt="Battery" style={{ width: 16, height: 16 }} />
+          </div>
+
+          {/* Date/Time */}
+          <div className="system-tray">
+            <div className="time-date">
+              <div>{formatTime(currentTime)}</div>
+              <div style={{ fontSize: "12px" }}>{formatDate(currentTime)}</div>
+            </div>
+          </div>
+
+          {/* Power Buttons (Desktop Only) */}
+          {!isMobile && (
+            <>
+              <button className="power-btn" onClick={onShutdown}>
+                Shutdown
+              </button>
+              <button className="power-btn" onClick={onSleep}>
+                Sleep
+              </button>
+            </>
+          )}
+
+          {/* Power Menu (Mobile) */}
+          {isMobile && (
+            <button className="power-icon-btn" onClick={() => setShowPowerMenu(true)}>
+              <FaPowerOff size={24} />
+            </button>
+          )}
+        </div>
+
+        {showHamburgerMenu && renderHamburgerMenu()}
+        {showPowerMenu && renderPowerMenu()}
       </div>
 
-      {showHamburgerMenu && renderHamburgerMenu()}
-      {showPowerMenu && renderPowerMenu()}
-    </div>
+      {/* Panels for Wi-Fi, Volume, Battery */}
+      {showNetworkPanel && <Network onClose={() => setShowNetworkPanel(false)} />}
+      {showVolumePanel && <VolumeControl onClose={() => setShowVolumePanel(false)} />}
+      {showBatteryPanel && <Battery onClose={() => setShowBatteryPanel(false)} />}
+    </>
   );
 };
 

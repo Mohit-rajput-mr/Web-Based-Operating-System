@@ -13,7 +13,7 @@ import './index.css';
  * Snap a position to the nearest grid cell.
  * Adjust gridSize as you see fit.
  */
-function snapToGrid({ x, y }, gridSize = 110) {
+function snapToGrid({ x, y }, gridSize = 80) {
   return {
     x: Math.round(x / gridSize) * gridSize,
     y: Math.round(y / gridSize) * gridSize
@@ -39,7 +39,7 @@ function getNextFreeSnappedPosition(items, startPos) {
 
   let found = false;
   while (!found) {
-    const collision = items.some(i => {
+    const collision = items.some((i) => {
       const ipos = i.position || { x: 0, y: 0 };
       return overlaps(ipos, { x, y });
     });
@@ -72,7 +72,7 @@ function getNextFreePosition(items) {
 
   let found = false;
   while (!found) {
-    const collision = items.some(i => {
+    const collision = items.some((i) => {
       const ipos = i.position || { x: 0, y: 0 };
       return overlaps(ipos, { x, y });
     });
@@ -137,8 +137,8 @@ export default function HomePage() {
 
   // On mount, load from IndexedDB
   useEffect(() => {
-    openDB().then(db => {
-      loadFileSystem(db).then(data => {
+    openDB().then((db) => {
+      loadFileSystem(db).then((data) => {
         if (data) {
           // Merge or "ensure" Word/Excel/PPT icons
           const updated = structuredClone(data);
@@ -146,7 +146,7 @@ export default function HomePage() {
           if (!root.children) root.children = [];
 
           function ensureApp(id, name, icon) {
-            const existing = root.children.find(item => item.id === id);
+            const existing = root.children.find((item) => item.id === id);
             if (!existing) {
               root.children.push({
                 id,
@@ -169,25 +169,28 @@ export default function HomePage() {
 
   // Save to IndexedDB whenever fileSystem changes
   useEffect(() => {
-    openDB().then(db => {
+    openDB().then((db) => {
       saveFileSystem(db, fileSystem);
     });
   }, [fileSystem]);
 
   // Helpers
-  const findFolderById = useCallback((folderId, current = fileSystem) => {
-    for (let item of current) {
-      if (item.id === folderId && item.type === 'folder') return item;
-      if (item.type === 'folder' && item.children) {
-        const found = findFolderById(folderId, item.children);
-        if (found) return found;
+  const findFolderById = useCallback(
+    (folderId, current = fileSystem) => {
+      for (let item of current) {
+        if (item.id === folderId && item.type === 'folder') return item;
+        if (item.type === 'folder' && item.children) {
+          const found = findFolderById(folderId, item.children);
+          if (found) return found;
+        }
       }
-    }
-    return null;
-  }, [fileSystem]);
+      return null;
+    },
+    [fileSystem]
+  );
 
   const createItem = (parentId, item) => {
-    setFileSystem(prev => {
+    setFileSystem((prev) => {
       const newFS = structuredClone(prev);
       const parentFolder = findFolderById(parentId, newFS);
       if (parentFolder) {
@@ -221,13 +224,13 @@ export default function HomePage() {
   const handleIconClick = (e, item) => {
     e.stopPropagation();
     if (e.ctrlKey) {
-      setSelectedItems(prev =>
+      setSelectedItems((prev) =>
         prev.includes(item.id)
-          ? prev.filter(id => id !== item.id)
+          ? prev.filter((id) => id !== item.id)
           : [...prev, item.id]
       );
     } else if (e.shiftKey) {
-      setSelectedItems(prev =>
+      setSelectedItems((prev) =>
         prev.includes(item.id) ? prev : [...prev, item.id]
       );
     } else {
@@ -259,10 +262,18 @@ export default function HomePage() {
     } else if (item.type === 'app') {
       // If it's Word/PPT/Excel
       switch (item.id) {
-        case 'wordApp': setShowWord(true); break;
-        case 'pptApp': setShowPPT(true); break;
-        case 'excelApp': setShowExcel(true); break;
-        default: openProperties(item); break;
+        case 'wordApp':
+          setShowWord(true);
+          break;
+        case 'pptApp':
+          setShowPPT(true);
+          break;
+        case 'excelApp':
+          setShowExcel(true);
+          break;
+        default:
+          openProperties(item);
+          break;
       }
     } else {
       openProperties(item);
@@ -271,7 +282,7 @@ export default function HomePage() {
 
   // Desktop management
   const sortDesktopItems = () => {
-    setFileSystem(prev => {
+    setFileSystem((prev) => {
       const newFS = structuredClone(prev);
       const root = findFolderById('root', newFS);
       if (root && root.children) {
@@ -295,17 +306,17 @@ export default function HomePage() {
     const newX = e.clientX - rect.left - parseFloat(offsetX);
     const newY = e.clientY - rect.top - parseFloat(offsetY);
 
-    setFileSystem(prev => {
+    setFileSystem((prev) => {
       const newFS = structuredClone(prev);
       const root = findFolderById('root', newFS);
       if (!root) return newFS;
-      const item = root.children.find(i => i.id === itemId);
+      const item = root.children.find((i) => i.id === itemId);
       if (item) {
         // First snap to grid
         const snappedPos = snapToGrid({ x: newX, y: newY });
         // Then find the next free spot if there's overlap
         const newPos = getNextFreeSnappedPosition(
-          root.children.filter(i => i.id !== itemId), 
+          root.children.filter((i) => i.id !== itemId),
           snappedPos
         );
         item.position = newPos;
@@ -329,7 +340,9 @@ export default function HomePage() {
       if (selectedItems.length === 0) return;
       const root = findFolderById('root');
       if (!root) return;
-      const actualItems = root.children.filter(i => selectedItems.includes(i.id));
+      const actualItems = root.children.filter((i) =>
+        selectedItems.includes(i.id)
+      );
 
       // copy
       if (e.ctrlKey && e.key.toLowerCase() === 'c') {
@@ -343,7 +356,7 @@ export default function HomePage() {
       if (e.ctrlKey && e.key.toLowerCase() === 'v') {
         if (clipboard.items.length > 0) {
           if (clipboard.mode === 'copy') {
-            clipboard.items.forEach(clipItem => {
+            clipboard.items.forEach((clipItem) => {
               createItem('root', {
                 ...clipItem,
                 id: `copy-${Date.now()}-${clipItem.id}`,
@@ -351,16 +364,16 @@ export default function HomePage() {
               });
             });
           } else if (clipboard.mode === 'cut') {
-            setFileSystem(prev => {
+            setFileSystem((prev) => {
               const newFS = structuredClone(prev);
               const rootFolder = findFolderById('root', newFS);
               if (!rootFolder) return newFS;
               // remove them from old location
               rootFolder.children = rootFolder.children.filter(
-                i => !clipboard.items.find(ci => ci.id === i.id)
+                (i) => !clipboard.items.find((ci) => ci.id === i.id)
               );
               // add them in
-              clipboard.items.forEach(ci => {
+              clipboard.items.forEach((ci) => {
                 rootFolder.children.push(ci);
               });
               return newFS;
@@ -371,12 +384,12 @@ export default function HomePage() {
       }
       // delete
       if (e.key === 'Delete') {
-        setFileSystem(prev => {
+        setFileSystem((prev) => {
           const newFS = structuredClone(prev);
           const rootFolder = findFolderById('root', newFS);
           if (!rootFolder) return newFS;
           rootFolder.children = rootFolder.children.filter(
-            i => !selectedItems.includes(i.id)
+            (i) => !selectedItems.includes(i.id)
           );
           return newFS;
         });
@@ -445,24 +458,59 @@ export default function HomePage() {
 
   const openApp = (appName) => {
     switch (appName) {
-      case 'fileExplorer': setShowFileExplorer(true); setExplorerFolderId('root'); break;
-      case 'camera': setShowCamera(true); break;
-      case 'calculator': setShowCalculator(true); break;
-      case 'terminal': setShowTerminal(true); break;
+      case 'fileExplorer':
+        setShowFileExplorer(true);
+        setExplorerFolderId('root');
+        break;
+      case 'camera':
+        setShowCamera(true);
+        break;
+      case 'calculator':
+        setShowCalculator(true);
+        break;
+      case 'terminal':
+        setShowTerminal(true);
+        break;
       case 'browser':
-      case 'webSearch': setShowBrowser(true); break;
-      case 'weather': setShowWeather(true); break;
-      case 'news': setShowNews(true); break;
-      case 'currency': setShowCurrency(true); break;
-      case 'dictionary': setShowDictionary(true); break;
-      case 'stock': setShowStock(true); break;
-      case 'joke': setShowJoke(true); break;
-      case 'game': setShowGame(true); break;
-      case 'voiceAssistant': setShowVoiceAssistant(true); break;
-      case 'systemInfo': setShowSystemInfo(true); break;
-      case 'locationInfo': setShowLocationInfo(true); break;
-      case 'shutdown': handleShutdown(); break;
-      case 'sleep': handleSleep(); break;
+      case 'webSearch':
+        setShowBrowser(true);
+        break;
+      case 'weather':
+        setShowWeather(true);
+        break;
+      case 'news':
+        setShowNews(true);
+        break;
+      case 'currency':
+        setShowCurrency(true);
+        break;
+      case 'dictionary':
+        setShowDictionary(true);
+        break;
+      case 'stock':
+        setShowStock(true);
+        break;
+      case 'joke':
+        setShowJoke(true);
+        break;
+      case 'game':
+        setShowGame(true);
+        break;
+      case 'voiceAssistant':
+        setShowVoiceAssistant(true);
+        break;
+      case 'systemInfo':
+        setShowSystemInfo(true);
+        break;
+      case 'locationInfo':
+        setShowLocationInfo(true);
+        break;
+      case 'shutdown':
+        handleShutdown();
+        break;
+      case 'sleep':
+        handleSleep();
+        break;
       default:
         break;
     }
@@ -529,28 +577,64 @@ export default function HomePage() {
           style={{ top: contextMenu.y, left: contextMenu.x }}
         >
           <ul>
-            <li onClick={() => { handleRefresh(); closeContextMenu(); }}>Refresh</li>
-            <li onClick={() => { sortDesktopItems(); closeContextMenu(); }}>Sort</li>
-            <li onClick={() => { setShowPersonalization(true); closeContextMenu(); }}>Background</li>
-            <li onClick={() => {
-              createItem('root', {
-                id: `file-${Date.now()}`,
-                name: `NewFile-${Date.now()}.txt`,
-                type: 'file',
-                content: ''
-              });
-              closeContextMenu();
-            }}>New File</li>
-            <li onClick={() => {
-              createItem('root', {
-                id: `folder-${Date.now()}`,
-                name: `NewFolder-${Date.now()}`,
-                type: 'folder',
-                children: []
-              });
-              closeContextMenu();
-            }}>New Folder</li>
-            <li onClick={() => { setShowTerminal(true); closeContextMenu(); }}>Mohit's Terminal</li>
+            <li
+              onClick={() => {
+                handleRefresh();
+                closeContextMenu();
+              }}
+            >
+              Refresh
+            </li>
+            <li
+              onClick={() => {
+                sortDesktopItems();
+                closeContextMenu();
+              }}
+            >
+              Sort
+            </li>
+            <li
+              onClick={() => {
+                setShowPersonalization(true);
+                closeContextMenu();
+              }}
+            >
+              Background
+            </li>
+            <li
+              onClick={() => {
+                createItem('root', {
+                  id: `file-${Date.now()}`,
+                  name: `NewFile-${Date.now()}.txt`,
+                  type: 'file',
+                  content: ''
+                });
+                closeContextMenu();
+              }}
+            >
+              New File
+            </li>
+            <li
+              onClick={() => {
+                createItem('root', {
+                  id: `folder-${Date.now()}`,
+                  name: `NewFolder-${Date.now()}`,
+                  type: 'folder',
+                  children: []
+                });
+                closeContextMenu();
+              }}
+            >
+              New Folder
+            </li>
+            <li
+              onClick={() => {
+                setShowTerminal(true);
+                closeContextMenu();
+              }}
+            >
+              Mohit's Terminal
+            </li>
           </ul>
         </div>
       )}
@@ -563,7 +647,7 @@ export default function HomePage() {
         minimizedWindows={minimizedWindows}
         onRestoreWindow={(id) => {
           // remove from minimized
-          setMinimizedWindows(prev => prev.filter(w => w.id !== id));
+          setMinimizedWindows((prev) => prev.filter((w) => w.id !== id));
           // re-open the app
           openApp(id);
         }}
@@ -613,26 +697,61 @@ export default function HomePage() {
         showExcel={showExcel}
         setShowExcel={setShowExcel}
         onMinimizeWindow={(win) => {
-          setMinimizedWindows(prev => [...prev, win]);
+          setMinimizedWindows((prev) => [...prev, win]);
           switch (win.id) {
-            case 'fileExplorer': setShowFileExplorer(false); break;
-            case 'camera': setShowCamera(false); break;
-            case 'calculator': setShowCalculator(false); break;
-            case 'weather': setShowWeather(false); break;
-            case 'news': setShowNews(false); break;
-            case 'currency': setShowCurrency(false); break;
-            case 'dictionary': setShowDictionary(false); break;
-            case 'stock': setShowStock(false); break;
-            case 'joke': setShowJoke(false); break;
-            case 'game': setShowGame(false); break;
-            case 'webSearch': setShowWebSearch(false); break;
-            case 'voiceAssistant': setShowVoiceAssistant(false); break;
-            case 'systemInfo': setShowSystemInfo(false); break;
-            case 'locationInfo': setShowLocationInfo(false); break;
-            case 'word': setShowWord(false); break;
-            case 'ppt': setShowPPT(false); break;
-            case 'excel': setShowExcel(false); break;
-            default: break;
+            case 'fileExplorer':
+              setShowFileExplorer(false);
+              break;
+            case 'camera':
+              setShowCamera(false);
+              break;
+            case 'calculator':
+              setShowCalculator(false);
+              break;
+            case 'weather':
+              setShowWeather(false);
+              break;
+            case 'news':
+              setShowNews(false);
+              break;
+            case 'currency':
+              setShowCurrency(false);
+              break;
+            case 'dictionary':
+              setShowDictionary(false);
+              break;
+            case 'stock':
+              setShowStock(false);
+              break;
+            case 'joke':
+              setShowJoke(false);
+              break;
+            case 'game':
+              setShowGame(false);
+              break;
+            case 'webSearch':
+              setShowWebSearch(false);
+              break;
+            case 'voiceAssistant':
+              setShowVoiceAssistant(false);
+              break;
+            case 'systemInfo':
+              setShowSystemInfo(false);
+              break;
+            case 'locationInfo':
+              setShowLocationInfo(false);
+              break;
+            case 'word':
+              setShowWord(false);
+              break;
+            case 'ppt':
+              setShowPPT(false);
+              break;
+            case 'excel':
+              setShowExcel(false);
+              break;
+            default:
+              break;
           }
         }}
       />
@@ -658,7 +777,7 @@ export default function HomePage() {
           onClose={() => setShowTextEditor(false)}
           onSave={(updatedFile) => {
             // Update the file content
-            setFileSystem(prev => {
+            setFileSystem((prev) => {
               const newFS = structuredClone(prev);
               const root = findFolderById('root', newFS);
               if (!root) return newFS;
@@ -697,7 +816,9 @@ export default function HomePage() {
         <div className="power-overlay">
           <div className="power-message">
             <h2>
-              {powerOverlay.type === 'shutdown' ? 'Shutting Down...' : 'Sleeping...'}
+              {powerOverlay.type === 'shutdown'
+                ? 'Shutting Down...'
+                : 'Sleeping...'}
             </h2>
             <button className="wake-up-btn" onClick={wakeUp}>
               Wake Up
