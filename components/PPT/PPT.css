@@ -1,114 +1,462 @@
-/* components/ppt/ppt.css */
+/* PPT.css */
+
+/* Container and global styles */
 .ppt-container {
-    display: flex;
-    height: 100%;
-    background-color: #f7f7f7;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .ppt-sidebar {
-    width: 220px;
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    overflow-y: auto;
-  }
-  
-  .add-slide-btn {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    background-color: #444;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  .add-slide-btn:hover {
-    background-color: #555;
-  }
-  
-  .slides-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .slide-thumbnail {
-    background-color: #555;
-    padding: 8px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    position: relative;
-    border-radius: 4px;
-    transition: transform 0.2s;
-  }
-  
-  .slide-thumbnail:hover {
-    transform: scale(1.02);
-  }
-  
-  .slide-thumbnail.active {
-    border: 2px solid #f0f0f0;
-  }
-  
-  .slide-preview {
-    max-height: 80px;
-    overflow: hidden;
-    color: #ddd;
-    font-size: 12px;
-  }
-  
-  .delete-slide-btn {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    background-color: red;
-    border: none;
-    color: #fff;
-    padding: 2px 6px;
-    cursor: pointer;
-    border-radius: 50%;
-    font-size: 12px;
-  }
-  
-  .ppt-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-  }
-  
-  .ppt-toolbar {
-    display: flex;
-    background-color: #eee;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-    flex-shrink: 0;
-  }
-  
-  .ppt-toolbar button {
-    margin-right: 8px;
-    padding: 6px 12px;
-    border: none;
-    background-color: #ddd;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 14px;
-    border-radius: 4px;
-  }
-  
-  .ppt-toolbar button:hover {
-    background-color: #ccc;
-  }
-  
-  .ppt-editor {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    outline: none;
-  }
-  
+  display: flex;
+  height: 100%;
+  background-color: #f7f7f7;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar styles */
+.ppt-sidebar {
+  width: 240px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.add-slide-btn {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #34495e;
+  color: #ecf0f1;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.add-slide-btn:hover {
+  background-color: #3a5770;
+}
+
+.slides-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.slide-thumbnail {
+  background-color: #3a4a5a;
+  padding: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.slide-thumbnail:hover {
+  transform: scale(1.02);
+}
+
+.slide-thumbnail.active {
+  border: 2px solid #ecf0f1;
+}
+
+.slide-preview {
+  max-height: 80px;
+  overflow: hidden;
+  color: #bdc3c7;
+  font-size: 12px;
+}
+
+.thumbnail-controls {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.slide-control-btn {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: none;
+  color: #ecf0f1;
+  padding: 2px 4px;
+  cursor: pointer;
+  border-radius: 2px;
+  font-size: 12px;
+}
+
+/* Main content styles */
+.ppt-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+/* Header and toolbar */
+.ppt-header {
+  display: flex;
+  flex-direction: column;
+  background-color: #ecf0f1;
+  padding: 8px;
+  border-bottom: 1px solid #bdc3c7;
+}
+
+.presentation-title-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 18px;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.main-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.toolbar-btn {
+  background-color: #bdc3c7;
+  border: none;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.toolbar-btn:hover {
+  background-color: #a5a5a5;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background-color: #7f8c8d;
+  margin: 0 4px;
+}
+
+.theme-select,
+.transition-select,
+.font-select,
+.font-size-select,
+.format-select {
+  padding: 6px;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+}
+
+/* Formatting toolbar */
+.ppt-formatting-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
+}
+
+.format-btn {
+  background-color: #ddd;
+  border: none;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.format-btn:hover {
+  background-color: #ccc;
+}
+
+.format-btn.active {
+  background-color: #bbb;
+}
+
+.color-picker-container {
+  position: relative;
+}
+
+.color-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #bdc3c7;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.color-palette {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.color-option {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+/* Editor styles */
+.ppt-editor-container {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+}
+
+.ppt-editor {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  outline: none;
+  position: relative;
+}
+
+.slide-content-editable {
+  width: 100%;
+  min-height: 400px;
+  padding: 12px;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.show-grid {
+  background-image: linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, 0.05) 25%, rgba(0, 0, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, 0.05) 75%, rgba(0, 0, 0, 0.05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, 0.05) 25%, rgba(0, 0, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, 0.05) 75%, rgba(0, 0, 0, 0.05) 76%, transparent 77%, transparent);
+}
+
+/* Drawing canvas */
+.drawing-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Context menu */
+.element-context-menu {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 4px;
+  z-index: 100;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+}
+
+.context-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+}
+
+/* Notes view */
+.notes-view {
+  display: flex;
+  padding: 16px;
+  gap: 16px;
+}
+
+.notes-slide-preview {
+  width: 30%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
+
+.slide-mini-preview {
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  padding: 4px;
+  background-color: #fff;
+}
+
+.slide-number-badge {
+  background-color: #3498db;
+  color: #fff;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.notes-editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-editor {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow-y: auto;
+}
+
+/* Outline view */
+.outline-view {
+  padding: 16px;
+}
+
+.outline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.outline-item {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.outline-item.active {
+  background-color: #e0e0e0;
+}
+
+/* Presentation mode */
+.presentation-mode {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.presentation-slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.presentation-content {
+  width: 80%;
+  height: 80%;
+  overflow: auto;
+}
+
+.presentation-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.presentation-nav-btn {
+  background-color: rgba(0,0,0,0.5);
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+}
+
+.presentation-exit-btn {
+  background-color: red;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Shape styles */
+.shape {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  margin: 4px;
+}
+
+.shape.rectangle {
+  background-color: #3498db;
+}
+
+.shape.circle {
+  background-color: #e74c3c;
+  border-radius: 50%;
+}
+
+.shape.triangle {
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 80px solid #f1c40f;
+}
+
+.shape.arrow {
+  font-size: 48px;
+  color: #2ecc71;
+}
+
+.shape.star {
+  font-size: 48px;
+  color: #9b59b6;
+}
+
+.shape.diamond {
+  width: 60px;
+  height: 60px;
+  background-color: #e67e22;
+  transform: rotate(45deg);
+}
+
+/* Animation classes */
+.animated.bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-20px); }
+  60% { transform: translateY(-10px); }
+}
+
+/* Media styles */
+.slide-video,
+.slide-audio {
+  max-width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.chart {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  border: 1px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Drawing overlay */
+.drawing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Unique theme styles */
+.ppt-container.theme-default { background-color: #f7f7f7; }
+.ppt-container.theme-dark { background-color: #1a1a1a; color: #f0f0f0; }
+.ppt-container.theme-professional { background-color: #e8e8e8; }
+.ppt-container.theme-creative { background-color: #fffaf0; }
