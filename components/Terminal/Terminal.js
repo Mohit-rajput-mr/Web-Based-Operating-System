@@ -3,7 +3,7 @@ import './Terminal.css';
 
 const Terminal = ({ onClose }) => {
   const [output, setOutput] = useState([
-    "Welcome to Mohit's Next-Level Terminal. Type 'help' for commands."
+    "Welcome to Mohit's Terminal. Type 'help' for commands."
   ]);
   const [command, setCommand] = useState('');
   const terminalEndRef = useRef(null);
@@ -101,7 +101,7 @@ const Terminal = ({ onClose }) => {
         return "Terminal closed.";
       },
       whoami: async () => {
-        return "You are the proud user of Mohit's Ultra Pro OS!";
+        return "You are the user visiting Mohit's  OS!";
       },
       date: async () => {
         return new Date().toLocaleDateString();
@@ -290,7 +290,7 @@ const Terminal = ({ onClose }) => {
     <div className="terminal-modal" style={windowStyle}>
       <div className="terminal-header">
         <div className="title-group">
-          <span className="terminal-title">Mohit's Terminal (Enhanced)</span>
+          <span className="terminal-title">Mohit's Terminal </span>
         </div>
         <div className="window-buttons">
           <button onClick={handleMinimize} className="min-btn">_</button>
